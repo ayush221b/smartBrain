@@ -8,6 +8,7 @@ import {Register} from './components/Register/Register';
 import Particles from 'react-particles-js';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
+import { History } from './components/History/history';
 
 const particlesOptions= {
   particles: {
@@ -28,6 +29,7 @@ const initialState = {
       celebrityName:'',
       route:'signin',
       isSignedIn: false,
+      requestedHistory:false,
       user:{
         id:'',
         name:'',
@@ -97,7 +99,9 @@ class App extends Component {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
-            id: this.state.user.id
+            id: this.state.user.id,
+            url: this.state.imageUrl,
+            celeb: response.outputs[0].data.regions[0].data.face.identity.concepts[0].name
           }) 
         })
         .then(response => response.json())
@@ -116,6 +120,12 @@ class App extends Component {
       this.setState(initialState);
     } else {
       this.setState({isSignedIn:true});
+      if(route === 'history') {
+        this.setState({requestedHistory: true});
+      }
+      if(route === 'home') {
+        this.setState({requestedHistory: false});
+      }
     }
     this.setState({route:route});
   }
@@ -128,7 +138,8 @@ class App extends Component {
           />
         <Navigation 
           onRouteChange={this.onRouteChange}
-          isSignedIn={this.state.isSignedIn}/>
+          isSignedIn={this.state.isSignedIn}
+          requestedHistory={this.state.requestedHistory}/>
         {this.state.route === 'home' ? 
         <div>
           <Logo />
@@ -145,6 +156,11 @@ class App extends Component {
           </div>
           <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
         </div> :
+        this.state.requestedHistory ? 
+          <History 
+            userInfo={this.state.user} 
+          />
+          :
         (
           this.state.route === 'register' ?
           <Register 
