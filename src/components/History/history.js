@@ -30,9 +30,9 @@ export class History extends React.Component{
 			<div className='grid-container'>
                 { historyImages.map(imageData => {
                     return (
-                        <article className="br3 ba b--black-10 mv4 center shadow-5">
-                            <img src={imageData.imageurl} style={{"width": "100px", "height":"100px"}}/>
-                            <h3 className='ph5 white'>{imageData.celebname}</h3>
+                        <article className="br3 ba b--black-10 mv4 center shadow-5 flex flex-column align-items-center">
+                            <img src={imageData.imageurl} style={{"width": "200px", "height":"200px"}}/>
+                            <h3 className='white'>{imageData.celebname}</h3>
 				        </article>
                     );
                 }) }
