@@ -140,8 +140,8 @@ class App extends Component {
           onInputChange={this.onInputChange} 
           onButtonSubmit={this.onButtonSubmit}
           />
-          <div className = ''>
-            <h2>{this.state.celebrityName}</h2>
+          <div className = 'celeb-name'>
+            <h2>Celebrity Name is : {this.state.celebrityName}</h2>
           </div>
           <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
         </div> :
